@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">视频号助手</string>
+    <string name="settings">设置</string>
+    <string name="statistics">统计</string>
+    <string name="accessibility_description">监测微信视频号使用时长，帮助您合理控制使用时间。需要此权限来检测页面变化。</string>
+</resources>
