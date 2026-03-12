@@ -19,38 +19,20 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
-
+        
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
+      
+    - name: Generate Gradle Wrapper
+      run: |
+        gradle wrapper --gradle-version 8.2
+        chmod +x gradlew
+                
     - name: Build with Gradle
       run: ./gradlew assembleDebug
-
+      
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: FocusWeChat-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 30
-
-    - name: Create Release
-      if: github.event_name == 'workflow_dispatch'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: app/build/outputs/apk/debug/app-debug.apk
-        tag_name: v1.0.0
-        name: FocusWeChat v1.0.0
-        body: |
-          微信视频号助手 - 第一版发布
-          
-          功能：
-          - 视频号使用时长限制
-          - 自动拦截超时使用
-          - 使用统计和报告
-          - 白名单时段设置
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: app-debug
+        path: app/build/outputs/apk/debug/*.apk
